@@ -1,0 +1,2 @@
+# fansubparser
+A fansub parser
