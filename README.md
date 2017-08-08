@@ -1,2 +1,2 @@
 # fansubparser
-A fansub parser
+Fak u fansub with cancerous ads!

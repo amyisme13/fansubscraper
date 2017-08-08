@@ -1,0 +1,30 @@
+{
+  "name": "fansubparser",
+  "version": "1.0.0",
+  "description": "Fak u fansub with cancerous ads!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amyisme13/fansubparser.git"
+  },
+  "author": "Azmi Makarima Y",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amyisme13/fansubparser/issues"
+  },
+  "homepage": "https://github.com/amyisme13/fansubparser#readme",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "body-parser": "^1.17.1",
+    "cheerio": "^0.22.0",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "moment": "^2.18.1",
+    "mongoose": "^4.9.9"
+  }
+}
