@@ -6,12 +6,18 @@ module.exports = (_page, callback) => {
     // Init var to contain axios promises
     let promises = []
 
-    // Make request to awsubs page 1 to {_page}
-    for(let i = 1; i <= _page; i++) {
-        let url = `${process.env.AWSUBS_BASE_URL}/page/${i}`
+    // If {_page} is an array
+    // Make request to awsubs page {_page[i]}
+    if(typeof _page === 'object') {
+        for(let i = 0; i < _page.length; i++) {
+            let url = `${process.env.AWSUBS_BASE_URL}/page/${_page[i]}`
+            promises.push(axios.get(url))
+        }
+    } else {
+        let url = `${process.env.AWSUBS_BASE_URL}/page/${_page}`
         promises.push(axios.get(url))
     }
-
+        
     // Parse for each promise
     axios.all(promises)
         .then((responses) => {

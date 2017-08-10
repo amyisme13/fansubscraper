@@ -10,6 +10,7 @@ const app = express();
 const _port = process.env.PORT;
 
 const awsubs = require('./routes/awsubs');
+const nekonime = require('./routes/nekonime');
 
 const configDB = require('./config/database');
 const Series = require('./schemas/series');
@@ -41,6 +42,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/awsubs', awsubs);
+app.use('/nekonime', nekonime);
 
 app.listen(_port, () => {
     console.log('App listening on port ' + _port)
