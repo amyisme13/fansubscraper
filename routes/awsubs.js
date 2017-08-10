@@ -5,10 +5,10 @@ const axios = require('axios');
 const Series = require('../schemas/series');
 
 router.get('/', function(request, response) {
-    const feedsParser = require('../parser/oldawsubs/feeds');
-    feedsParser(5, (feeds) => {
+    const feedsParser = require('../parser/awsubs/feeds');
+    feedsParser(5, (posts) => {
         response.header('Content-Type', 'application/json')
-                .json(feeds);
+                .json(posts);
     });
 });
 
@@ -131,7 +131,7 @@ router.get('/search', function(request, response) {
     }
 });
 
-router.get('/test', (req, res) => {
+router.get('/asd', (req, res) => {
     let parser = require('../parser/oldawsubs/post')
 
     let animes = []
@@ -158,6 +158,10 @@ router.get('/test', (req, res) => {
                 })
             }
         })
+})
+
+router.get('/test', (req, res) => {
+    res.json('test')
 })
 
 module.exports = router;
