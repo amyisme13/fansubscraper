@@ -6,7 +6,10 @@ const Series = require('../schemas/series');
 
 router.get('/', function(request, response) {
     const feedsParser = require('../parser/awsubs/feeds');
-    feedsParser(5, (posts) => {
+    feedsParser(5, (err, posts) => {
+        if(err) {
+            throw err
+        }
         response.header('Content-Type', 'application/json')
                 .json(posts);
     });

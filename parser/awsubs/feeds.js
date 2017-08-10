@@ -70,6 +70,9 @@ module.exports = (_page, callback) => {
                 })
             })
 
-            callback(posts)
+            callback(null, posts)
+        })
+        .catch((err) => {
+            callback(err)
         })
 }
