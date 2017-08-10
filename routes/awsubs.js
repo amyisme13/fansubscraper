@@ -5,8 +5,10 @@ const axios = require('axios');
 const Series = require('../schemas/series');
 
 router.get('/', function(request, response) {
+    const _page = request.query.p ? request.query.p : 1
+
     const feedsParser = require('../parser/awsubs/feeds');
-    feedsParser(1, (err, posts) => {
+    feedsParser(_page, (err, posts) => {
         if(err) {
             throw err;
         }
