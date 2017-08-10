@@ -5,15 +5,15 @@ const axios = require('axios');
 const Series = require('../schemas/series');
 
 router.get('/', function(request, response) {
-    const feedsParser = require('../parser/awsubs/feeds');
-    feedsParser(10, (feeds) => {
+    const feedsParser = require('../parser/oldawsubs/feeds');
+    feedsParser(5, (feeds) => {
         response.header('Content-Type', 'application/json')
                 .json(feeds);
     });
 });
 
 router.get('/dl/:url', function(request, response) {
-    const dllinkParser = require('../parser/awsubs/dllink');
+    const dllinkParser = require('../parser/oldawsubs/dllink');
     dllinkParser(request.params.url, (links) => {
         response.header('Content-Type', 'application/json')
                 .json(links);
@@ -43,7 +43,7 @@ router.get('/series/blob', function(request, response) {
 });
 
 router.get('/series/update', function(request, response) {
-    const allseriesParser = require('../parser/awsubs/allseries');
+    const allseriesParser = require('../parser/oldawsubs/allseries');
     
     allseriesParser('http://awsubs.co/all-anime-list', (animes) => {
         response.header('Content-Type', 'application/json')
@@ -86,7 +86,7 @@ router.get('/series/:id', function(request, response) {
 
 router.get('/series/:id/update', function(request, response) {
     const series_id = request.params.id;
-    const seriesParser = require('../parser/awsubs/series');
+    const seriesParser = require('../parser/oldawsubs/series');
 
     seriesParser(series_id, (anime, err) => {
         if(err) {
@@ -131,24 +131,33 @@ router.get('/search', function(request, response) {
     }
 });
 
-router.get('/test/:q', (req, res) => {
-    Series
-        .find({
-            title: {
-                $regex: req.params.q,
-                $options: 'i'
+router.get('/test', (req, res) => {
+    let parser = require('../parser/oldawsubs/post')
+
+    let animes = []
+    let done = 0
+
+    let pushToAnimes = (anime, max) => {
+        done++
+        animes.push(anime)
+
+        if(done == max) {
+            animes.sort((x, y) => {
+                return new Date(y.date) - new Date(x.date)
+            })
+            res.json(animes)
+        }
+    }
+
+    axios.get(process.env.BASE_URL + '/awsubs')
+        .then((result) => {
+            feeds = result.data
+            for(let i = 0; i < feeds.length; i++) {
+                parser(feeds[i].url, (anime) => {
+                    pushToAnimes(anime, feeds.length)
+                })
             }
         })
-        .sort({series_id: 1})
-        .exec((err, animes) => {
-            if(animes.length > 0){
-                res.header('Content-Type', 'application/json')
-                    .json(animes);
-            } else {
-                res.header('Content-Type', 'application/json')
-                    .json({msg: 'None'});
-            }
-        });
 })
 
 module.exports = router;
