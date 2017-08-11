@@ -7,8 +7,8 @@ const Series = require('../schemas/series');
 router.get('/', function(request, response) {
     const _page = request.query.p ? request.query.p : 1
 
-    const feedsParser = require('../parser/awsubs/feeds');
-    feedsParser(_page, (err, posts) => {
+    const feedParser = require('../parser/awsubs/feed');
+    feedParser(_page, (err, posts) => {
         if(err) {
             throw err;
         }
@@ -135,35 +135,6 @@ router.get('/search', function(request, response) {
                 .json({msg: 'No query'});
     }
 });
-
-router.get('/asd', (req, res) => {
-    let parser = require('../parser/oldawsubs/post')
-
-    let animes = []
-    let done = 0
-
-    let pushToAnimes = (anime, max) => {
-        done++
-        animes.push(anime)
-
-        if(done == max) {
-            animes.sort((x, y) => {
-                return new Date(y.date) - new Date(x.date)
-            })
-            res.json(animes)
-        }
-    }
-
-    axios.get(process.env.BASE_URL + '/awsubs')
-        .then((result) => {
-            feeds = result.data
-            for(let i = 0; i < feeds.length; i++) {
-                parser(feeds[i].url, (anime) => {
-                    pushToAnimes(anime, feeds.length)
-                })
-            }
-        })
-})
 
 router.get('/test', (req, res) => {
     res.json({})
