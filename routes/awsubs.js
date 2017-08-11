@@ -18,10 +18,13 @@ router.get('/', function(request, response) {
 });
 
 router.get('/dl/:url', function(request, response) {
-    const dllinkParser = require('../parser/oldawsubs/dllink');
-    dllinkParser(request.params.url, (links) => {
+    const dllinkParser = require('../parser/awsubs/post');
+    dllinkParser(request.params.url, (err, post) => {
+        if(err) {
+            throw err
+        }
         response.header('Content-Type', 'application/json')
-                .json(links);
+                .json(post.dllink);
     }); 
 });
 
