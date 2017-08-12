@@ -42,6 +42,7 @@ module.exports = (urls, callback) => {
                     title: "",
                     episode: "",
                     url: "",
+                    thumbnail_url: "",
                     series: "",
                     series_url: "",
                     released_at: "",
@@ -54,6 +55,7 @@ module.exports = (urls, callback) => {
                 const seriesElem = $('.kategori a')
                 const datetimeElem = $('.kategori')
                 const dllinkTitleElems = $('.dl-box .dl-title')
+                const thumbnailElem = $('.fpost .separator img')
 
                 // Get the post id from shortlink
                 const postIdUrl = postIdElem.attr('href')
@@ -118,6 +120,7 @@ module.exports = (urls, callback) => {
                 post.title = titleElem.text()
                 post.episode = episodeNum
                 post.url = response.config.url
+                post.thumbnail_url = thumbnailElem.attr('src')
                 post.series = seriesElem.text()
                 post.series_url = process.env.AWSUBS_BASE_URL + seriesElem.attr('href')
                 post.released_at = datetime.toJSON()

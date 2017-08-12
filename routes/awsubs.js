@@ -7,8 +7,8 @@ const Series = require('../schemas/series');
 router.get('/', function(request, response) {
     const _page = request.query.p ? request.query.p : 1
 
-    const feedParser = require('../parser/awsubs/feed');
-    feedParser(_page, (err, posts) => {
+    const feedScraper = require('../scraper/awsubs/feed');
+    feedScraper(_page, (err, posts) => {
         if(err) {
             throw err;
         }
@@ -18,8 +18,8 @@ router.get('/', function(request, response) {
 });
 
 router.get('/dl/:url', function(request, response) {
-    const dllinkParser = require('../parser/awsubs/post');
-    dllinkParser(request.params.url, (err, post) => {
+    const dllinkScraper = require('../scraper/awsubs/post');
+    dllinkScraper(request.params.url, (err, post) => {
         if(err) {
             throw err
         }
@@ -51,9 +51,9 @@ router.get('/series/blob', function(request, response) {
 });
 
 router.get('/series/update', function(request, response) {
-    const allseriesParser = require('../parser/oldawsubs/allseries');
+    const allseriesScraper = require('../scraper/oldawsubs/allseries');
     
-    allseriesParser('http://awsubs.co/all-anime-list', (animes) => {
+    allseriesScraper('http://awsubs.co/all-anime-list', (animes) => {
         response.header('Content-Type', 'application/json')
                 .json(animes);
     });
@@ -94,9 +94,9 @@ router.get('/series/:id', function(request, response) {
 
 router.get('/series/:id/update', function(request, response) {
     const series_id = request.params.id;
-    const seriesParser = require('../parser/oldawsubs/series');
+    const seriesScraper = require('../scraper/oldawsubs/series');
 
-    seriesParser(series_id, (anime, err) => {
+    seriesScraper(series_id, (anime, err) => {
         if(err) {
             response.header('Content-Type', 'application/json')
                     .json(err);

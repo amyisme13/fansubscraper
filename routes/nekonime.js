@@ -4,8 +4,8 @@ const router = express.Router();
 router.get('/', function(request, response) {
     const _page = request.query.p ? request.query.p : 1
 
-    const feedParser = require('../parser/nekonime/feed');
-    feedParser(_page, (err, posts) => {
+    const feedScraper = require('../scraper/nekonime/feed');
+    feedScraper(_page, (err, posts) => {
         if(err) {
             throw err;
         }
