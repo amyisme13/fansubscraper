@@ -65,6 +65,7 @@ module.exports = (_page, callback) => {
                         // Get each elem needed for the post
                         const titleElem = $('.dchanzititle h1')
                         const seriesElem = $('.taxonomy.category')
+                        const seriesurlElem = $('.loliinfo a:contains(Episodes)')
                         const datetimeElem = $('.dchanztitle-small > b:nth-child(4)')
                         const thumbnailElem = $('.boxcontent p .crazy_lazy')
 
@@ -83,7 +84,7 @@ module.exports = (_page, callback) => {
                         post.url = postResponse.config.url
                         post.thumbnail_url = thumbnailElem.attr('data-src')
                         post.series = seriesElem.text()
-                        post.series_url = seriesElem.attr('href')
+                        post.series_url = seriesurlElem.attr('href')
                         post.released_at = datetime.toJSON()
                         post.dllink = 'Not Supported Yet'
 
