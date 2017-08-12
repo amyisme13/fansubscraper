@@ -4,7 +4,7 @@ const router = express.Router();
 router.get('/', function(request, response) {
     const _page = request.query.p ? request.query.p : 1
 
-    const feedScraper = require('../scraper/nekonime/feed');
+    const feedScraper = require('../scrapers/nekonime/feed');
     feedScraper(_page, (err, posts) => {
         if(err) {
             throw err;
