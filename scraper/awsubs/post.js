@@ -131,8 +131,10 @@ module.exports = (urls, callback) => {
             })
 
             if(isArray) {
+                // If {urls} is array send the whole array
                 callback(null, posts)
             } else {
+                // If not, only send the first one
                 callback(null, posts[0])
             }
         })

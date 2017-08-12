@@ -55,6 +55,7 @@ module.exports = (_page, callback) => {
                             title: "",
                             episode: "",
                             url: "",
+                            thumbnail_url: "",
                             series: "",
                             series_url: "",
                             released_at: "",
@@ -65,6 +66,7 @@ module.exports = (_page, callback) => {
                         const titleElem = $('.dchanzititle h1')
                         const seriesElem = $('.taxonomy.category')
                         const datetimeElem = $('.dchanztitle-small > b:nth-child(4)')
+                        const thumbnailElem = $('.boxcontent p .crazy_lazy')
 
                         // Get the episode from title
                         const titleSplit = titleElem.text().toLowerCase().split(' ')
@@ -79,6 +81,7 @@ module.exports = (_page, callback) => {
                         post.title = titleElem.text()
                         post.episode = episodeNum
                         post.url = postResponse.config.url
+                        post.thumbnail_url = thumbnailElem.attr('data-src')
                         post.series = seriesElem.text()
                         post.series_url = seriesElem.attr('href')
                         post.released_at = datetime.toJSON()

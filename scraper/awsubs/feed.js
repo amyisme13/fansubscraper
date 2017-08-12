@@ -37,6 +37,7 @@ module.exports = (_page, callback) => {
                         title: "",
                         episode: "",
                         url: "",
+                        thumnail_url: "",
                         series: "",
                         series_url: "",
                         released_at: "",
@@ -48,6 +49,7 @@ module.exports = (_page, callback) => {
                     const seriesElem = $(postElem).find('.kategori a')
                     const dateElem = $(postElem).find('.kategori')
                     const timeElem = $(postElem).find('.waktu')
+                    const thumnailElem = $(postElem).find('.thumbnail img')
 
                     // Get the episode from title
                     const titleSplit = titleElem.text().toLowerCase().split(' ')
@@ -66,6 +68,7 @@ module.exports = (_page, callback) => {
                     post.title = titleElem.text()
                     post.episode = episodeNum
                     post.url = titleElem.attr('href')
+                    post.thumnail_url = thumnailElem.attr('src')
                     post.series = seriesElem.text()
                     post.series_url = process.env.AWSUBS_BASE_URL + seriesElem.attr('href')
                     post.released_at = datetime.toJSON()
