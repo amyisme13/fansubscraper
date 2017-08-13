@@ -2,6 +2,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const moment = require('moment');
 
+const postScraper = require('./post')
+
 module.exports = (_page, callback) => {
     // Init var to contain axios promises
     let promises = []
@@ -33,70 +35,21 @@ module.exports = (_page, callback) => {
                     postsURL.push($(postElem).attr('href'))
                 })
             })
-            
-            // Init var to contain posts promises
-            let postsPromises = []
-            // Foreach posts url, make a new request
-            postsURL.forEach((postURL) => {
-                postsPromises.push(axios.get(postURL))
-            })
 
-            axios.all(postsPromises)
-                .then((postResponses) => {
-                    // init var to contain posts
-                    let posts = []
-
-                    postResponses.forEach((postResponse) => {
-                        // Parse the response html with cheerio
-                        const $ = cheerio.load(postResponse.data);
-
-                        // Define the post schema
-                        let post = {
-                            title: "",
-                            episode: "",
-                            url: "",
-                            thumbnail_url: "",
-                            series: "",
-                            series_url: "",
-                            released_at: "",
-                            dllink: ""
-                        }
-
-                        // Get each elem needed for the post
-                        const titleElem = $('.dchanzititle h1')
-                        const seriesElem = $('.taxonomy.category')
-                        const seriesurlElem = $('.loliinfo a:contains(Episodes)')
-                        const datetimeElem = $('.dchanztitle-small > b:nth-child(4)')
-                        const thumbnailElem = $('.boxcontent p .crazy_lazy')
-
-                        // Get the episode from title
-                        const titleSplit = titleElem.text().toLowerCase().split(' ')
-                        const episodePos = titleSplit.indexOf('episode')
-                        const episodeNum = (episodePos > 0) ? titleSplit[episodePos + 1] : '1';
-
-                        // Get the datetime of the post
-                        const datetimeText = datetimeElem.text().toLowerCase()
-                        const datetime = moment(datetimeText, 'MMM Do YYYY -- h-mm a')
-
-                        // Put in schema
-                        post.title = titleElem.text()
-                        post.episode = episodeNum
-                        post.url = postResponse.config.url
-                        post.thumbnail_url = thumbnailElem.attr('data-src')
-                        post.series = seriesElem.text()
-                        post.series_url = seriesurlElem.attr('href')
-                        post.released_at = datetime.toJSON()
-                        post.dllink = 'Not Supported Yet'
-
-                        // Push to posts
-                        posts.push(post)
-                    })
-                    
-                    callback(null, posts)
-                })
-                .catch((err) => {
+            // Using the post scraper, scrape each url
+            postScraper(postsURL, (err, posts) => {
+                if(err) {
                     callback(err)
-                })
+                }
+                
+                // Update each post dllinks
+                // Instead of the download link turn into /dl/links
+                for(let i = 0; i < posts.length; i++) {
+                    posts[i].dllink = `${process.env.BASE_URL}/nekonime/dl/` + encodeURIComponent(posts[i].url)
+                }
+
+                callback(err, posts)
+            })
         })
         .catch((err) => {
             callback(err)

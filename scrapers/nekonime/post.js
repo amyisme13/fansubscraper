@@ -90,7 +90,6 @@ module.exports = (urls, callback) => {
                     // Put in schema 
                     thumbnailOther.width = srcSplit[1]
                     thumbnailOther.url = srcSplit[0]
-                    console.log(src)
 
                     thumbnailOthers.push(thumbnailOther)
                 })
