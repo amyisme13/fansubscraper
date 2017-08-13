@@ -14,4 +14,15 @@ router.get('/', function(request, response) {
     });
 });
 
+router.get('/dl/:url', function(request, response) {
+    const dllinkScraper = require('../scrapers/nekonime/post');
+    dllinkScraper(request.params.url, (err, post) => {
+        if(err) {
+            throw err
+        }
+        response.header('Content-Type', 'application/json')
+                .json(post.dllink);
+    }); 
+});
+
 module.exports = router;
