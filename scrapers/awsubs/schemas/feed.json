@@ -1,9 +1,11 @@
 [
     {
+        "post_id": 0,
         "title": "",
         "episode": "",
         "url": "",
         "thumbnail_url": "",
+        "thumbnail_others": "",
         "series": "",
         "series_url": "",
         "released_at": "",
