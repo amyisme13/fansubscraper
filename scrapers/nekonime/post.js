@@ -14,14 +14,14 @@ module.exports = (urls, callback) => {
         isArray = true
         for(let i = 0; i < urls.length; i++) {
             if(typeof urls[i] === 'number') {
-                let url = `${process.env.AWSUBS_BASE_URL}/?p=${urls[i]}`
+                let url = `${process.env.NEKONIME_BASE_URL}/?p=${urls[i]}`
                 promises.push(axios.get(url))
             } else {
                 promises.push(axios.get(urls[i]))
             }
         }
     } else if(typeof urls === 'number') {
-        let url = `${process.env.AWSUBS_BASE_URL}/?p=${urls}`
+        let url = `${process.env.NEKONIME_BASE_URL}/?p=${urls}`
         promises.push(axios.get(url))
     } else {
         promises.push(axios.get(urls))
@@ -35,7 +35,7 @@ module.exports = (urls, callback) => {
             responses.forEach((response) => {
                 // Parse the response html with cheerio
                 const $ = cheerio.load(response.data);
-                
+
                 // Define the post schema
                 let post = {
                     post_id: 0,
@@ -43,6 +43,7 @@ module.exports = (urls, callback) => {
                     episode: "",
                     url: "",
                     thumbnail_url: "",
+                    thumbnail_others: [],
                     series: "",
                     series_url: "",
                     released_at: "",
@@ -51,12 +52,13 @@ module.exports = (urls, callback) => {
 
                 // Get each elem needed for the post
                 const postIdElem = $('[rel=shortlink]')
-                const titleElem = $('.featured2 > h1')
-                const seriesElem = $('.kategori a')
-                const datetimeElem = $('.kategori')
-                const dllinkTitleElems = $('.dl-box .dl-title')
-                const thumbnailElem = $('.fpost .separator img')
-
+                const titleElem = $('.dchanzititle h1')
+                const seriesElem = $('.taxonomy.category')
+                const seriesurlElem = $('.loliinfo a:contains(Episodes)')
+                const datetimeElem = $('.dchanztitle-small > b:nth-child(4)')
+                const dllinkElems = $('.download > ul > li')
+                const thumbnailElem = $('.boxcontent p .crazy_lazy')
+                
                 // Get the post id from shortlink
                 const postIdUrl = postIdElem.attr('href')
                 const pPos = postIdUrl.indexOf('p=')
@@ -68,31 +70,50 @@ module.exports = (urls, callback) => {
                 const episodeNum = (episodePos > 0) ? titleSplit[episodePos + 1] : '1';
 
                 // Get the datetime of the post
-                const katText = datetimeElem.text().toLowerCase();
-                const startIndex = katText.indexOf('dirilis:') + 9;
-                const endIndex = katText.indexOf('|', startIndex) - 1;
-                const datetimeText = katText.slice(startIndex, endIndex);
-                const datetime = moment(datetimeText, 'MMMM Do- YYYY- h-mm a')
+                const datetimeText = datetimeElem.text().toLowerCase()
+                const datetime = moment(datetimeText, 'MMM Do YYYY -- h-mm a')
+
+                // Get other thumbnails url
+                const srcsetText = thumbnailElem.attr('srcset')
+                const srcset = srcsetText.split(', ')
+                let thumbnailOthers = []
+                srcset.forEach((src) => {
+                    // Define thumbnailOther schema
+                    let thumbnailOther = {
+                        width: "",
+                        url: ""
+                    }
+
+                    // Split the source to get url & width
+                    const srcSplit = src.split(' ')
+
+                    // Put in schema 
+                    thumbnailOther.width = srcSplit[1]
+                    thumbnailOther.url = srcSplit[0]
+                    console.log(src)
+
+                    thumbnailOthers.push(thumbnailOther)
+                })
 
                 // Init var to contain dllinks 
                 let dllinks = []
                 // Get the download links
-                dllinkTitleElems.each((i, dllinkTitleElem) => {
+                dllinkElems.each((i, dllinkElem) => {
                     // Define the dllink schema
                     let dllink = {
                         title: "",
                         items: []
                     }
 
+                    // Get elem needed
+                    const titleElem = $(dllinkElem).find('strong')
+                    const itemElems = $(dllinkElem).find('a')
+
                     // Init var to contain items
                     let items = []
 
-                    // Get items elem
-                    const itemElems = $(dllinkTitleElem).next()
-
                     // Foreach itemElem get item
-                    itemElems.find('a')
-                        .each((i, itemElem) => {
+                    itemElems.each((i, itemElem) => {
                             // Define item schema
                             let item = {
                                 source: "",
@@ -108,7 +129,7 @@ module.exports = (urls, callback) => {
                         })
 
                     // Put in schema
-                    dllink.title = $(dllinkTitleElem).text()
+                    dllink.title = titleElem.text()
                     dllink.items = items
 
                     // Push to dllinks container
@@ -120,9 +141,10 @@ module.exports = (urls, callback) => {
                 post.title = titleElem.text()
                 post.episode = episodeNum
                 post.url = response.config.url
-                post.thumbnail_url = thumbnailElem.attr('src')
+                post.thumbnail_url = thumbnailElem.attr('data-src')
+                post.thumbnail_others = thumbnailOthers
                 post.series = seriesElem.text()
-                post.series_url = process.env.AWSUBS_BASE_URL + seriesElem.attr('href')
+                post.series_url = seriesurlElem.attr('href')
                 post.released_at = datetime.toJSON()
                 post.dllink = dllinks
 
