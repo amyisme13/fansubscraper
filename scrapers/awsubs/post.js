@@ -66,6 +66,8 @@ module.exports = (urls, callback) => {
                 // Get the episode from title
                 const titleSplit = titleElem
                     .text()
+                    // Fak u awsub
+                    .replace(/\u00a0/g, ' ')
                     .toLowerCase()
                     .split(' ');
                 const episodePos = titleSplit.indexOf('episode');

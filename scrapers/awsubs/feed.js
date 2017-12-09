@@ -2,19 +2,19 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const moment = require('moment');
 
-module.exports = (_page, callback) => {
+module.exports = (page, callback) => {
     // Init var to contain axios promises
     const promises = [];
 
-    // If {_page} is an array
-    // Make request to awsubs page {_page[i]}
-    if (typeof _page === 'object') {
-        for (let i = 0; i < _page.length; i++) {
-            const url = `${process.env.AWSUBS_BASE_URL}/page/${_page[i]}`;
+    // If {page} is an array
+    // Make request to awsubs page {page[i]}
+    if (typeof page === 'object') {
+        for (let i = 0; i < page.length; i++) {
+            const url = `${process.env.AWSUBS_BASE_URL}/page/${page[i]}`;
             promises.push(axios.get(url));
         }
     } else {
-        const url = `${process.env.AWSUBS_BASE_URL}/page/${_page}`;
+        const url = `${process.env.AWSUBS_BASE_URL}/page/${page}`;
         promises.push(axios.get(url));
     }
 
@@ -55,10 +55,13 @@ module.exports = (_page, callback) => {
                     // Get the episode from title
                     const titleSplit = titleElem
                         .text()
+                        // Fak u awsub
+                        .replace(/\u00a0/g, ' ')
                         .toLowerCase()
                         .split(' ');
                     const episodePos = titleSplit.indexOf('episode');
                     const episodeNum = episodePos > 0 ? titleSplit[episodePos + 1] : '1';
+                    console.log(titleElem.html());
 
                     // Get the datetime of the post
                     const katText = dateElem.text().toLowerCase();
