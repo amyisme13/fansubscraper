@@ -3,12 +3,11 @@
         "es6": true,
         "node": true
     },
-    "extends": "airbnb",
+    "extends": "airbnb-base",
     "rules": {
-        "indent": [
-            "error",
-            4
-        ]
+        "indent": ["error", 4],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-console": 0
     },
     "parserOptions": {
         "ecmaVersion": 2017

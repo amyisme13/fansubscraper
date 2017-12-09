@@ -1,28 +1,29 @@
 const express = require('express');
+
 const router = express.Router();
 
-router.get('/', function(request, response) {
-    const _page = request.query.p ? request.query.p : 1
+// Scrapper
+const feedScraper = require('../scrapers/nekonime/feed');
+const postScraper = require('../scrapers/nekonime/post');
 
-    const feedScraper = require('../scrapers/nekonime/feed');
-    feedScraper(_page, (err, posts) => {
-        if(err) {
+router.get('/', (request, response) => {
+    const page = request.query.p ? request.query.p : 1;
+
+    feedScraper(page, (err, posts) => {
+        if (err) {
             throw err;
         }
-        response.header('Content-Type', 'application/json')
-                .json(posts);
+        response.header('Content-Type', 'application/json').json(posts);
     });
 });
 
-router.get('/dl/:url', function(request, response) {
-    const dllinkScraper = require('../scrapers/nekonime/post');
-    dllinkScraper(request.params.url, (err, post) => {
-        if(err) {
-            throw err
+router.get('/dl/:url', (request, response) => {
+    postScraper(request.params.url, (err, post) => {
+        if (err) {
+            throw err;
         }
-        response.header('Content-Type', 'application/json')
-                .json(post.dllink);
-    }); 
+        response.header('Content-Type', 'application/json').json(post.dllink);
+    });
 });
 
 module.exports = router;

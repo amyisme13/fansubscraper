@@ -1,3 +1,1 @@
-module.exports = num => {
-    return [...Array(num).keys()];
-};
+module.exports = num => [...Array(num).keys()];
