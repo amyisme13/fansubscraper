@@ -26,5 +26,10 @@
     "express": "^4.15.2",
     "moment": "^2.18.1",
     "mongoose": "^4.9.9"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.7.0"
   }
 }
