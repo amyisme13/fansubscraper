@@ -38,7 +38,7 @@ module.exports = (page, callback) => {
                         title: '',
                         episode: '',
                         url: '',
-                        thumnail_url: '',
+                        thumbnail_url: '',
                         series: '',
                         series_url: '',
                         released_at: '',
@@ -50,7 +50,7 @@ module.exports = (page, callback) => {
                     const seriesElem = $(postElem).find('.kategori a');
                     const dateElem = $(postElem).find('.kategori');
                     const timeElem = $(postElem).find('.waktu');
-                    const thumnailElem = $(postElem).find('.thumbnail img');
+                    const thumbnailElem = $(postElem).find('.thumbnail img');
 
                     // Get the episode from title
                     const titleSplit = titleElem
@@ -61,12 +61,11 @@ module.exports = (page, callback) => {
                         .split(' ');
                     const episodePos = titleSplit.indexOf('episode');
                     const episodeNum = episodePos > 0 ? titleSplit[episodePos + 1] : '1';
-                    console.log(titleElem.html());
 
                     // Get the datetime of the post
                     const katText = dateElem.text().toLowerCase();
                     const startIndex = katText.indexOf('released on') + 12;
-                    const endIndex = katText.indexOf('\r', startIndex);
+                    const endIndex = katText.indexOf(new Date().getFullYear(), startIndex) + 4;
                     const dateText = katText.slice(startIndex, endIndex);
                     const timeText = timeElem.text().toLowerCase();
                     const datetime = moment(`${dateText} ${timeText}`, 'MMMM Do- YYYY h-mm a');
@@ -75,7 +74,7 @@ module.exports = (page, callback) => {
                     post.title = titleElem.text();
                     post.episode = episodeNum;
                     post.url = titleElem.attr('href');
-                    post.thumnail_url = thumnailElem.attr('src');
+                    post.thumbnail_url = thumbnailElem.attr('src');
                     post.series = seriesElem.text();
                     post.series_url = process.env.AWSUBS_BASE_URL + seriesElem.attr('href');
                     post.released_at = datetime.toJSON();
