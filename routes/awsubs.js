@@ -22,12 +22,21 @@ router.get('/', (request, response) => {
     });
 });
 
-router.get('/dl/:url', (request, response) => {
-    postScraper(request.params.url, (err, post) => {
+router.get('/dl/:posturl', (request, response) => {
+    postScraper(request.params.posturl, (err, post) => {
         if (err) {
             throw err;
         }
         response.header('Content-Type', 'application/json').json(post.dllink);
+    });
+});
+
+router.get('/post/:posturl', (request, response) => {
+    postScraper(request.params.posturl, (err, post) => {
+        if (err) {
+            throw err;
+        }
+        response.header('Content-Type', 'application/json').json(post);
     });
 });
 

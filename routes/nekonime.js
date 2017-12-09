@@ -26,4 +26,13 @@ router.get('/dl/:posturl', (request, response) => {
     });
 });
 
+router.get('/post/:posturl', (request, response) => {
+    postScraper(request.params.posturl, (err, post) => {
+        if (err) {
+            throw err;
+        }
+        response.header('Content-Type', 'application/json').json(post);
+    });
+});
+
 module.exports = router;
