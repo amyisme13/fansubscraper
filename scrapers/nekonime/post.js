@@ -57,7 +57,7 @@ module.exports = (urls, callback) => {
                 const seriesElem = $('.taxonomy.category');
                 const seriesurlElem = $('.loliinfo a:contains(Episodes)');
                 const datetimeElem = $('.dchanztitle-small > b:nth-child(4)');
-                const dllinkElems = $('.download > ul > li');
+                const dllinkElems = $('.download > ul > li > ul > li');
                 const thumbnailElem = $('.boxcontent p .crazy_lazy');
 
                 // Get the post id from shortlink
