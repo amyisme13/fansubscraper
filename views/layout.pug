@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    block meta
+      meta(charset="UTF-8")
+      meta(name="viewport", content="width=device-width, initial-scale=1.0")
+      meta(http-equiv="X-UA-Compatible", content="ie=edge")
+
+    title Document
+
+    - var hour = new Date().getHours()
+    if hour >= 5 && hour < 18
+      link(rel="stylesheet", href="https://unpkg.com/bulmaswatch@0.5.2/flatly/bulmaswatch.min.css")
+    else
+      link(rel="stylesheet", href="https://unpkg.com/bulmaswatch@0.5.2/darkly/bulmaswatch.min.css")
+    link(rel="stylesheet", href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css")
+    link(rel="stylesheet", href="https://unpkg.com/bulma-divider@0.1.0/bulma-divider.min.css")
+    block style
+
+  body
+    .container.is-fluid
+      block content
+        h1 Layout
+
+      a(href="https://bulma.io")
+        if hour >= 5 && hour < 18
+          img.bulma(src="https://bulma.io/images/made-with-bulma--semiblack.png")
+        else
+          img.bulma(src="https://bulma.io/images/made-with-bulma--semiwhite.png")
+
+    script(src="https://unpkg.com/vue@2.5.9/dist/vue.min.js")
+    script(src="https://unpkg.com/lodash@4.17.4/lodash.min.js")
+    block script

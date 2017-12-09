@@ -1,0 +1,92 @@
+extends layout
+
+block style
+  link(rel="stylesheet", href="/css/app.css")
+  style.
+    .tile .box {
+      background: grey;
+    }
+
+block content
+  #app.columns
+    aside.menu.column.is-2
+      p.menu-label Providers
+      ul.menu-list
+        li
+          a(:class="{'is-active': provider == 'awsubs'}", @click="changeProvider('awsubs')") Awsubs
+        li
+          a(:class="{'is-active': provider == 'nekonime'}", @click="changeProvider('nekonime')") Nekonime
+    .is-divider-vertical
+    .column.is-4
+      p.menu-label Feeds
+      nav.pagination.is-centered
+        a.pagination-previous(:disabled="pagination.page === pagination.min", @click="changePage('prev')")
+          span.icon
+            i.fa.fa-chevron-left
+        a.pagination-next(:disabled="pagination.page === pagination.max", @click="changePage('next')")
+          span.icon
+            i.fa.fa-chevron-right
+        ul.pagination-list
+          li
+            a.pagination-link {{ pagination.page }}
+      div.feed-list
+        .card(v-if="!feeds.length")
+          .card-content.has-text-centered
+            i.fa.fa-refresh.fa-spin.fa-3x.fa-fw
+        .card(v-for="(post, i) in feeds")
+          .card-content
+            .media
+              .media-left
+                figure.image.is-128x128
+                  img(:src="post.thumbnail_url")
+              .media-content
+                .content
+                  p
+                    strong {{ post.title }}
+                    br
+                    small Released at: {{ new Date(post.released_at).toLocaleString() }}
+                    br
+                    small Series:
+                      a(:href="post.series_url", target="_blank")  {{ post.series }}
+                  a.button.is-primary.is-outlined(@click="selectPost(i)")
+                    span Detail
+                    span.icon.is-small
+                      i.fa.fa-chevron-right
+        .space
+    .is-divider-vertical
+    .column.is-5
+      p.menu-label Detail
+      div.post-detail
+        .card(v-if="!detailLoaded")
+          .card-content.has-text-centered
+            i.fa.fa-refresh.fa-spin.fa-3x.fa-fw
+        .card(v-if="detailLoaded && !selectedPost.title")
+          .card-content
+            p.title.has-text-centered Select post by clicking on one of the detail button
+        .card(v-if="selectedPost.title")
+          .card-image
+            figure.image.is-16by9
+              img(:src="selectedPost.thumbnail_url")
+          .card-content
+            a.subtitle(:href="selectedPost.url") {{ selectedPost.title }}
+            .content
+              small Released at: {{ new Date(selectedPost.released_at).toLocaleString() }}
+              <br>
+              small Series:
+                a(:href="selectedPost.series_url")  {{ selectedPost.series }}
+            table.table.is-fullwidth(v-for="dl in selectedPost.dllink")
+              thead
+                tr
+                  th(colspan="2") {{ dl.title }}
+              tbody
+                tr(v-for="link in dl.items")
+                  td {{ link.source }}
+                  td
+                    a.button.is-secondary.is-outlined(:href="link.url")
+                      span Download
+                      span.icon.is-small
+                        i.fa.fa-download
+        .space
+
+block script
+  script(src="/js/app.js")
