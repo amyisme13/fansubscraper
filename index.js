@@ -3,6 +3,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
+const moment = require('moment');
 const mongoose = require('mongoose');
 const path = require('path');
 
@@ -47,6 +48,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set view engine to pug
 app.set('view engine', 'pug');
 
+// Put momentjs to app.locals so it can be used in views
+app.locals.moment = moment;
+
+// Index route
 app.get('/', (req, res) => {
     res.render('index');
 });

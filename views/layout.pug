@@ -8,7 +8,7 @@ html(lang="en")
 
     title Document
 
-    - var hour = new Date().getHours()
+    - var hour = moment().utcOffset(7).format('H')
     if hour >= 5 && hour < 18
       link(rel="stylesheet", href="https://unpkg.com/bulmaswatch@0.5.2/flatly/bulmaswatch.min.css")
     else
