@@ -38,7 +38,8 @@ block content
               .media-content
                 .content
                   p
-                    strong {{ post.title }}
+                    a(:href="post.url")
+                      strong {{ post.title }}
                     br
                     small Released at: {{ new Date(post.released_at).toLocaleString() }}
                     br
