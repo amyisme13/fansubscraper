@@ -57,8 +57,11 @@ module.exports = (urls, callback) => {
                 const seriesElem = $('.taxonomy.category');
                 const seriesurlElem = $('.loliinfo a:contains(Episodes)');
                 const datetimeElem = $('.dchanztitle-small > b:nth-child(4)');
-                const dllinkElems = $('.download > ul > li > ul > li');
                 const thumbnailElem = $('.boxcontent p .crazy_lazy');
+                let dllinkElems = $('.download > ul > li');
+                if (dllinkElems.not(':has(li)').text() === '') {
+                    dllinkElems = $('.download > ul > li > ul > li');
+                }
 
                 // Get the post id from shortlink
                 const postIdUrl = postIdElem.attr('href');

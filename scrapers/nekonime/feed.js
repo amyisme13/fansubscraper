@@ -37,11 +37,11 @@ module.exports = (page, callback) => {
             });
 
             // Using the post scraper, scrape each url
-            postScraper(postsURL, (err, oldPosts) => {
+            postScraper(postsURL, (err, oriPosts) => {
                 if (err) {
                     callback(err);
                 }
-                const updatedPosts = oldPosts;
+                const updatedPosts = oriPosts;
 
                 // Update each post dllinks
                 // Instead of the download link turn into /dl/links
