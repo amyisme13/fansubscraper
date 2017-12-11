@@ -2,6 +2,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const moment = require('moment');
 
+const { baseUrl } = require('./config');
+
 module.exports = (urls, callback) => {
     // Init var is {urls} array
     let isArray = false;
@@ -14,14 +16,14 @@ module.exports = (urls, callback) => {
         isArray = true;
         for (let i = 0; i < urls.length; i++) {
             if (typeof urls[i] === 'number') {
-                const url = `${process.env.AWSUBS_BASE_URL}/?p=${urls[i]}`;
+                const url = `${baseUrl}/?p=${urls[i]}`;
                 promises.push(axios.get(url));
             } else {
                 promises.push(axios.get(urls[i]));
             }
         }
     } else if (typeof urls === 'number') {
-        const url = `${process.env.AWSUBS_BASE_URL}/?p=${urls}`;
+        const url = `${baseUrl}/?p=${urls}`;
         promises.push(axios.get(url));
     } else {
         promises.push(axios.get(urls));
@@ -127,7 +129,7 @@ module.exports = (urls, callback) => {
                 post.url = response.config.url;
                 post.thumbnail_url = thumbnailElem.attr('src');
                 post.series = seriesElem.text();
-                post.series_url = process.env.AWSUBS_BASE_URL + seriesElem.attr('href');
+                post.series_url = baseUrl + seriesElem.attr('href');
                 post.released_at = datetime.toJSON();
                 post.dllink = dllinks;
 

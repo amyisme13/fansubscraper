@@ -2,6 +2,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const moment = require('moment');
 
+const { baseUrl } = require('./config');
+
 module.exports = (page, callback) => {
     // Init var to contain axios promises
     const promises = [];
@@ -10,11 +12,11 @@ module.exports = (page, callback) => {
     // Make request to awsubs page {page[i]}
     if (typeof page === 'object') {
         for (let i = 0; i < page.length; i++) {
-            const url = `${process.env.AWSUBS_BASE_URL}/page/${page[i]}`;
+            const url = `${baseUrl}/page/${page[i]}`;
             promises.push(axios.get(url));
         }
     } else {
-        const url = `${process.env.AWSUBS_BASE_URL}/page/${page}`;
+        const url = `${baseUrl}/page/${page}`;
         promises.push(axios.get(url));
     }
 
@@ -76,7 +78,7 @@ module.exports = (page, callback) => {
                     post.url = titleElem.attr('href');
                     post.thumbnail_url = thumbnailElem.attr('src');
                     post.series = seriesElem.text();
-                    post.series_url = process.env.AWSUBS_BASE_URL + seriesElem.attr('href');
+                    post.series_url = baseUrl + seriesElem.attr('href');
                     post.released_at = datetime.toJSON();
                     post.dllink =
                         `${process.env.BASE_URL}/awsubs/dl/${encodeURIComponent(post.url)}`;

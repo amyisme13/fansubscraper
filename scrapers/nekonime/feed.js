@@ -2,6 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 const postScraper = require('./post');
+const { baseUrl } = require('./config');
 
 module.exports = (page, callback) => {
     // Init var to contain axios promises
@@ -11,11 +12,11 @@ module.exports = (page, callback) => {
     // Make request to awsubs page {_page[i]}
     if (typeof page === 'object') {
         for (let i = 0; i < page.length; i++) {
-            const url = `${process.env.NEKONIME_BASE_URL}/page/${page[i]}`;
+            const url = `${baseUrl}/page/${page[i]}`;
             promises.push(axios.get(url));
         }
     } else {
-        const url = `${process.env.NEKONIME_BASE_URL}/page/${page}`;
+        const url = `${baseUrl}/page/${page}`;
         promises.push(axios.get(url));
     }
 

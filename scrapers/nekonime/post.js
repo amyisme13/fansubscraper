@@ -2,6 +2,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const moment = require('moment');
 
+const { baseUrl } = require('./config');
+
 module.exports = (urls, callback) => {
     // Init var is {urls} array
     let isArray = false;
@@ -14,14 +16,14 @@ module.exports = (urls, callback) => {
         isArray = true;
         for (let i = 0; i < urls.length; i++) {
             if (typeof urls[i] === 'number') {
-                const url = `${process.env.NEKONIME_BASE_URL}/?p=${urls[i]}`;
+                const url = `${baseUrl}/?p=${urls[i]}`;
                 promises.push(axios.get(url));
             } else {
                 promises.push(axios.get(urls[i]));
             }
         }
     } else if (typeof urls === 'number') {
-        const url = `${process.env.NEKONIME_BASE_URL}/?p=${urls}`;
+        const url = `${baseUrl}/?p=${urls}`;
         promises.push(axios.get(url));
     } else {
         promises.push(axios.get(urls));

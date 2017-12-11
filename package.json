@@ -1,6 +1,6 @@
 {
   "name": "fansubscraper",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Fak u fansub with cancerous ads!",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/amyisme13/fansubscraper.git"
   },
-  "author": "Azmi Makarima Y",
+  "author": "Azmi Makarima Y <amy.azmim@gmail.com> (http://amyis.moe)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/amyisme13/fansubscraper/issues"
@@ -19,14 +19,9 @@
   "homepage": "https://github.com/amyisme13/fansubscraper#readme",
   "dependencies": {
     "axios": "^0.16.1",
-    "body-parser": "^1.17.1",
     "cheerio": "^0.22.0",
-    "cors": "^2.8.3",
-    "dotenv": "^4.0.0",
-    "express": "^4.15.2",
     "moment": "^2.18.1",
-    "mongoose": "^4.9.9",
-    "pug": "^2.0.0-rc.4"
+    "schema-object": "^4.0.11"
   },
   "devDependencies": {
     "eslint": "^4.9.0",
