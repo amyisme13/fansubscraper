@@ -1,7 +1,1 @@
-const awsubs = require('./scrapers/awsubs');
-const nekonime = require('./scrapers/nekonime');
-
-module.exports = {
-    awsubs,
-    nekonime,
-};
+module.exports = require('./lib/scrapers');
