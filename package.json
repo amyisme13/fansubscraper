@@ -20,8 +20,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "cheerio": "^0.22.0",
-    "moment": "^2.18.1",
-    "schema-object": "^4.0.11"
+    "moment": "^2.18.1"
   },
   "devDependencies": {
     "eslint": "^4.9.0",
