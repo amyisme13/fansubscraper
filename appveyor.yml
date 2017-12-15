@@ -14,4 +14,4 @@ test_script:
   - yarn test
 
 cache:
-  - '%LOCALAPPDATA%\\Yarn'
+  - '%LOCALAPPDATA%\Yarn'
