@@ -9,6 +9,7 @@ package
 .travis.yml
 .jenkins.yml
 .codeclimate.yml
+appveyor.yml
 
 #linters
 .jscsrc
