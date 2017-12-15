@@ -1,36 +1,33 @@
 {
   "name": "fansubscraper",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "Fak u fansub with cancerous ads!",
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --no-timeouts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amyisme13/fansubscraper.git"
   },
-  "author": "Azmi Makarima Y",
+  "author": "Azmi Makarima Y <amy.azmim@gmail.com> (http://amyis.moe)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/amyisme13/fansubscraper/issues"
   },
   "homepage": "https://github.com/amyisme13/fansubscraper#readme",
   "dependencies": {
-    "axios": "^0.16.1",
-    "body-parser": "^1.17.1",
-    "cheerio": "^0.22.0",
-    "cors": "^2.8.3",
-    "dotenv": "^4.0.0",
-    "express": "^4.15.2",
-    "moment": "^2.18.1",
-    "mongoose": "^4.9.9",
-    "pug": "^2.0.0-rc.4"
+    "cheerio": "^1.0.0-rc.2",
+    "moment": "^2.19.4",
+    "node-fetch": "^1.7.3"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-json-schema": "^1.5.0",
     "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^4.0.1"
   }
 }
