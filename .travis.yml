@@ -1,5 +1,6 @@
 language: node_js
 node_js:
-  - "8"
+- '8'
 notifications:
-  webhooks: http://188.166.211.14/ci/travis
+  slack:
+    secure: EMjOIulW2V5oRxWCqyMzcTvctZXva5lyEdDa7+yzr2kX8v0Yf0kZVqJu6wRVgtKkZoOk/UaUyUBFNsPRSAvpmAUFF+Rq+gb6TbdaZoC/1T0VcnqCxWpkm0WkYlwhKRPOb8ic7+twyZ/7FIkOnP3qDYadhnSwiHE3QaQEDx3nKNcq068UFsg7bBBtXrJlBwBUBW4Xmq5F+8+GETdoEZ2U9psHt7xaTTewyJreaGetg0JNmSb1tvDUB0WYlRQV8OCo1CYiQ8Dn9hs/XfL+XmuJ+Go0+Byg9lYZvd8cmtm/CtnXqqArASL0IlEtc0u/RnQrah6ChVIJ2Kgoj4E7ElKEHcFfco5rs5TSsyKcvl3RGEGhLYBRjU2o6eKo6I95ivI1W2rcb84H7d/xel3Sk1HTMY9LAgkGCKX0xOF/Au9M+mehcG0iOIRy1i5g9HN45dn5fbjXXGRkp0tZjmehMXFkhS/J5NSFqs0Lio4QC5bczBvmI3noClkivsMXyq0eBVqRkv4f4ilFAHDlp7nsYOOEu51NW2u7I5rDbUGy4fCtU+gTawlEHEEIRwROSHjtil39HzwxAYcQWNVJD+OFL97PZxsQwvJOD/Jgd5TJkgflSHlzujkUSHuL3ayuVoDcixht3OExw+Zcmk9L8LGZ2G+WwgcHsL2z3II0uLfI9x0bqek=
