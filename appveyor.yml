@@ -15,3 +15,7 @@ test_script:
 
 cache:
   - '%LOCALAPPDATA%\Yarn'
+
+notifications:
+  - provider: Webhook
+    url: http://188.166.211.14/ci/appveyor
