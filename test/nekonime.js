@@ -24,17 +24,33 @@ describe('nekonime scraper', () => {
   });
 
   describe('feed', () => {
-    it('should be a valid feed schema', async () => {
-      const result = await nekonime.feed(1);
+    describe('page 1', () => {
+      it('should be a valid feed schema', async () => {
+        const result = await nekonime.feed(1);
 
-      assert.jsonSchema(result, feedSchema);
+        assert.jsonSchema(result, feedSchema);
+      });
+    });
+
+    describe('page 2', () => {
+      it('should be a valid feed schema', async () => {
+        const result = await nekonime.feed(2);
+
+        assert.jsonSchema(result, feedSchema);
+      });
     });
   });
 
   describe('post', () => {
     it('should be a valid post schema', async () => {
-      const feed = await nekonime.feed(1);
+      const feed = await nekonime.feed(2);
       const result = await nekonime.post(feed.posts[1].url);
+
+      assert.jsonSchema(result, postSchema);
+    });
+
+    it('should be able to parse different kind of "download" elements', async () => {
+      const result = await nekonime.post('https://nekonime.com/garo-vanishing-line-episode-12-subtitle-indonesia/');
 
       assert.jsonSchema(result, postSchema);
     });
