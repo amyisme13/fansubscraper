@@ -19,9 +19,11 @@ const postSchema = {
       properties: {
         name: {
           type: 'string',
+          minLength: 1,
         },
         url: {
           type: 'string',
+          minLength: 1,
           format: 'uri',
         },
       },
@@ -31,30 +33,37 @@ const postSchema = {
     },
     title: {
       type: 'string',
+      minLength: 1,
     },
     episode: {
       type: 'integer',
     },
     url: {
       type: 'string',
+      minLength: 1,
       format: 'uri',
     },
     thumbnailUrl: {
       type: 'string',
+      minLength: 1,
       format: 'uri',
     },
     series: {
       type: 'string',
+      minLength: 1,
     },
     seriesUrl: {
       type: 'string',
+      minLength: 1,
       format: 'uri',
     },
     description: {
       type: 'string',
+      minLength: 1,
     },
     releasedAt: {
       type: 'string',
+      minLength: 1,
       format: 'date-time',
     },
     downloads: {
@@ -66,6 +75,7 @@ const postSchema = {
         properties: {
           title: {
             type: 'string',
+            minLength: 1,
           },
           sources: {
             type: 'array',
@@ -75,9 +85,11 @@ const postSchema = {
               properties: {
                 name: {
                   type: 'string',
+                  minLength: 1,
                 },
                 url: {
                   type: 'string',
+                  minLength: 1,
                   format: 'uri',
                 },
               },

@@ -9,9 +9,11 @@ const feedSchema = {
       properties: {
         name: {
           type: 'string',
+          minLength: 1,
         },
         url: {
           type: 'string',
+          minLength: 1,
           format: 'uri',
         },
       },
@@ -24,13 +26,16 @@ const feedSchema = {
         properties: {
           title: {
             type: 'string',
+            minLength: 1,
           },
           url: {
             type: 'string',
+            minLength: 1,
             format: 'uri',
           },
           thumbnailUrl: {
             type: 'string',
+            minLength: 1,
             format: 'uri',
           },
         },

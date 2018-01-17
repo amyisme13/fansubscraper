@@ -26,7 +26,7 @@ describe('nekonime scraper', () => {
   describe('feed', () => {
     describe('page 1', () => {
       it('should be a valid feed schema', async () => {
-        const result = await nekonime.feed(1);
+        const result = await nekonime.feed(1, false);
 
         assert.jsonSchema(result, feedSchema);
       });
