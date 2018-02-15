@@ -1,6 +1,6 @@
 {
   "name": "fansubscraper",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "Fak u fansub with cancerous ads!",
   "main": "index.js",
   "scripts": {
